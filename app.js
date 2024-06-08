@@ -6,7 +6,10 @@ const fastify = require('fastify')({
 })
 
 fastify.get('/', function (request, reply) {
-  reply.type('text/html').send(html)
+  request.body = request.body || "string"
+  var sd = request.body
+  reply.type('text/html').send(sd)
+  //reply.type('text/html').send(html)
 })
 
 fastify.listen({host: host, port: port }, function (err, address) {
