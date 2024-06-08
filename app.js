@@ -10,7 +10,9 @@ fastify.get('/', function (request, reply) {
 })
 
 fastify.post('/', function (request, reply) {
-  reply.type('text/html').send("post")
+  var responsedata = request.body
+  responsedata += " + 1"
+  reply.type('text/html').send(responsedata)
 })
 
 fastify.listen({host: host, port: port }, function (err, address) {
