@@ -3,20 +3,13 @@ Table Top Client Code
 This is just a reference doc in the form of snipet(s) and not an actual client.
 */
 
-class TTCLI {
-    constructor(id, command, endpoint){
-        // construct JSON to send to API.
-        //Identifier assigned by API
-        this._id = id || 0;
+class Client {
+    constructor(pawn, endpoint){
+        this._id = "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c => (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16) );
+        this._pawn = pawn || "assign";
+        this._command = ""
 
-        //command made up of mixed string ID, action as lowercase string, X Y pairs for where the action should happen.
-        this._commmand = command || [this._id, "string", [0,0]];
-
-        // this may not be needed either.
-        this._commandSent = false;
-
-        //A few methods down here
-        this.sendCommand = function(){           
+        this.sendCommand = function(command){           
             // Creating a XHR object
             var xhr = new XMLHttpRequest();
             var url = endpoint;
@@ -34,16 +27,20 @@ class TTCLI {
                 }
             };
  
+            
+            var data = {};
+            data._id = this._id
+            data._command = command
+
+
             // Converting JSON data to string
-            var data = JSON.stringify(this._commmand);
  
             // Sending data with the request
             xhr.send(data);
         }
 
         this.connect = function(){
-            this._commmand = [0, "connect"]
-            this.sendCommand()
+            this.sendCommand("connect")
         }
     }
 };

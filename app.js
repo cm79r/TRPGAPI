@@ -17,8 +17,7 @@ fastify.post('/', function (request, reply) {
   console.log(" ")
   console.log(" ")
   console.log(" ")
-  var rqbody = JSON.stringify(request.body)
-  var responsedata = game.resolveRequest(rqbody)
+  var responsedata = game.resolveRequest(request.body)
   reply.type('text/html').send(responsedata)
 })
 
@@ -39,12 +38,6 @@ class Sidebar{
     this._requests = 0;
     this._pawn = 1;
 
-    this.createUID = function() {
-      return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-      );
-    };
-
     this.requestNumber = function(){
       this._requests ++;
       return this._requests;
@@ -52,7 +45,7 @@ class Sidebar{
 
     this.resolveRequest = function(request){
       var response
-      var temp = JSON.parse(request);
+      var temp = request
       this._requestID = this.requestNumber();
       this._id = temp._id || null;
       this._command = temp._command || "bad request";
@@ -60,7 +53,7 @@ class Sidebar{
       if(temp._command == "connect"){
         var pwn = new Pawn(this._pawn);
         this._gameState._pawns.push(pwn);
-        var cli = new Client(this.createUID(), pwn);
+        var cli = new Client(temp._id, pwn);
         this._clients.push(cli);
         this._pawn ++;
         response = JSON.stringify(cli);
@@ -86,7 +79,7 @@ class Client {
 
 class Pawn {
   constructor(id){    
-    this._id = id;
+    this._pawnId = id;
     //Pawn's Image
     this._image = "Image Url Here";
     //Pawns location
