@@ -10,6 +10,13 @@ fastify.get('/', function (request, reply) {
 })
 
 fastify.post('/', function (request, reply) {
+  console.log(" ")
+  console.log(" ")
+  console.log(" ")
+  console.log(request.body)
+  console.log(" ")
+  console.log(" ")
+  console.log(" ")
   var responsedata = game.resolveRequest(request.body)
   reply.type('text/html').send(responsedata)
 })
