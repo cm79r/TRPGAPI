@@ -12,8 +12,7 @@ fastify.get('/', function (request, reply) {
 })
 
 fastify.post('/', function (request, reply) {
-  var responsedata = request.body
-  responsedata += " + 1"
+  var responsedata = game.resolveRequest(request.body)
   reply.type('text/html').send(responsedata)
 })
 
@@ -26,10 +25,15 @@ fastify.listen({host: host, port: port }, function (err, address) {
 
 const html = "Test Complete"
 
+
+
 class Sidebar{
   constructor(){
     this._clients = [];
     this._gameState = this._gameState || new GameState()
+    this._queue = []
+    this._requests = 0
+    this._pawn = 1
 
     this.createUID = function() {
       return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
@@ -37,7 +41,66 @@ class Sidebar{
       );
     };
 
+    this.readInput = function(input){
+      var data = JSON.parse(input);
+      if(data._command == "connect"){
 
+      };
+
+      if(data._command == "move"){
+
+      };
+    };
+
+    this.requestNumber = function(){
+      this._requests ++
+      return this._requests
+    }
+
+    this.resolveRequest = function(request){
+      var response
+      var temp = JSON.parse(request)
+      this._requestID = this.requestNumber()
+      this._id = temp._id || null
+      this._command = temp._command || "bad request"
+
+      if(data._command == "connect"){
+        var pwn = new Pawn(this._pawn)
+        var cli = new Client(this.createUID(), pwn)
+        this._clients.push(cli)
+        this._pawn ++
+        response = JSON.stringify(cli)
+      }
+      if(data._command == "move"){
+        console.log("move command")
+        response = JSON.stringify(["move command"])
+      }
+
+      return response
+    }
+
+  }
+};
+
+class Client {
+  constructor(id, pawn){
+    this._id = id
+    this._pawn = pawn
+    this._type = "client"
+  }
+};
+
+class Pawn {
+  constructor(id){    
+    this._id = id
+    //Pawn's Image
+    this._image = "Image Url Here"
+    //Pawns location
+    this._x
+    this._y
+
+    //Set Data Type for client
+    this._type = "pawn"
   }
 };
 
@@ -48,21 +111,5 @@ class GameState {
     this._mapImahe = "Image Url Here"
     this._pawns = [ , ]
     this._type = "gamestate"
-  }
-};
-
-class Pawn {
-  constructor(){
-    //UID of client that controls this Pawn
-    this._controllerID = 10000000-1000-4000-8000-100000000000
-    
-    //Pawn's Image
-    this._image = "Image Url Here"
-    //Pawns location
-    this._x
-    this._y
-
-    //Set Data Type for client
-    this._type = "pawn"
   }
 };

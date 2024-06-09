@@ -1,10 +1,10 @@
 /*
 Table Top Client Code
-This is just a reference doc in the form of some snipets and not an actual client.
+This is just a reference doc in the form of snipet(s) and not an actual client.
 */
 
 class TTCLI {
-    constructor(id, command){
+    constructor(id, command, endpoint){
         // construct JSON to send to API.
         //Identifier assigned by API
         this._id = id || 0;
@@ -19,7 +19,7 @@ class TTCLI {
         this.sendCommand = function(){           
             // Creating a XHR object
             var xhr = new XMLHttpRequest();
-            var url = endpointhere;
+            var url = endpoint;
        
             // open a connection
             xhr.open("POST", url, true);
@@ -39,6 +39,11 @@ class TTCLI {
  
             // Sending data with the request
             xhr.send(data);
+        }
+
+        this.connect = function(){
+            this._commmand = [0, "connect"]
+            this.sendCommand()
         }
     }
 };
