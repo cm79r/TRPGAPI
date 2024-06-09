@@ -9,8 +9,8 @@ class TTCLI {
         //Identifier assigned by API
         this._id = id || 0;
 
-        //command as a lowercase string, X Y pairs for when the action should happen.
-        this._commmand = command || ["string", [0,0]];
+        //command made up of mixed string ID, action as lowercase string, X Y pairs for where the action should happen.
+        this._commmand = command || [this._id, "string", [0,0]];
 
         // this may not be needed either.
         this._commandSent = false;
