@@ -26,10 +26,10 @@ const html = "Test Complete"
 class Sidebar{
   constructor(){
     this._clients = [];
-    this._gameState = this._gameState || new GameState()
-    this._queue = []
-    this._requests = 0
-    this._pawn = 1
+    this._gameState = this._gameState || new GameState();
+    this._queue = [];
+    this._requests = 0;
+    this._pawn = 1;
 
     this.createUID = function() {
       return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
@@ -38,65 +38,66 @@ class Sidebar{
     };
 
     this.requestNumber = function(){
-      this._requests ++
-      return this._requests
-    }
+      this._requests ++;
+      return this._requests;
+    };
 
     this.resolveRequest = function(request){
       var response
-      var temp = JSON.parse(request)
-      this._requestID = this.requestNumber()
-      this._id = temp._id || null
-      this._command = temp._command || "bad request"
+      var temp = JSON.parse(request);
+      this._requestID = this.requestNumber();
+      this._id = temp._id || null;
+      this._command = temp._command || "bad request";
 
       if(data._command == "connect"){
-        var pwn = new Pawn(this._pawn)
-        var cli = new Client(this.createUID(), pwn)
-        this._clients.push(cli)
-        this._pawn ++
-        response = JSON.stringify(cli)
+        var pwn = new Pawn(this._pawn);
+        this._gameState._pawns.push(pwn);
+        var cli = new Client(this.createUID(), pwn);
+        this._clients.push(cli);
+        this._pawn ++;
+        response = JSON.stringify(cli);
       }
       if(data._command == "move"){
-        console.log("move command")
-        response = JSON.stringify(["move command"])
+        console.log("move command");
+        response = JSON.stringify(this._gameState);
       }
 
-      return response
-    }
+      return response;
+    };
 
   }
 };
 
 class Client {
   constructor(id, pawn){
-    this._id = id
-    this._pawn = pawn
-    this._type = "client"
+    this._id = id;
+    this._pawn = pawn;
+    this._type = "client";
   }
 };
 
 class Pawn {
   constructor(id){    
-    this._id = id
+    this._id = id;
     //Pawn's Image
-    this._image = "Image Url Here"
+    this._image = "Image Url Here";
     //Pawns location
-    this._x
-    this._y
+    this._x;
+    this._y;
 
     //Set Data Type for client
-    this._type = "pawn"
+    this._type = "pawn";
   }
 };
 
 class GameState {
   constructor(){
-    this._mapID = 0
-    this._mapName = "Map Name"
-    this._mapImahe = "Image Url Here"
-    this._pawns = [ , ]
-    this._type = "gamestate"
+    this._mapID = 0;
+    this._mapName = "Map Name";
+    this._mapImahe = "Image Url Here";
+    this._pawns = [ , ];
+    this._type = "gamestate";
   }
 };
 
-const game = new Sidebar()
+const game = new Sidebar();
