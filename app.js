@@ -5,8 +5,6 @@ const fastify = require('fastify')({
   logger: true
 })
 
-const game = new Sidebar()
-
 fastify.get('/', function (request, reply) {
   reply.type('text/html').send(html)
 })
@@ -25,8 +23,6 @@ fastify.listen({host: host, port: port }, function (err, address) {
 
 const html = "Test Complete"
 
-
-
 class Sidebar{
   constructor(){
     this._clients = [];
@@ -39,17 +35,6 @@ class Sidebar{
       return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
         (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
       );
-    };
-
-    this.readInput = function(input){
-      var data = JSON.parse(input);
-      if(data._command == "connect"){
-
-      };
-
-      if(data._command == "move"){
-
-      };
     };
 
     this.requestNumber = function(){
@@ -113,3 +98,5 @@ class GameState {
     this._type = "gamestate"
   }
 };
+
+const game = new Sidebar()
