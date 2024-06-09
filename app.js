@@ -57,7 +57,7 @@ class Sidebar{
       this._id = temp._id || null;
       this._command = temp._command || "bad request";
 
-      if(data._command == "connect"){
+      if(temp._command == "connect"){
         var pwn = new Pawn(this._pawn);
         this._gameState._pawns.push(pwn);
         var cli = new Client(this.createUID(), pwn);
@@ -65,7 +65,7 @@ class Sidebar{
         this._pawn ++;
         response = JSON.stringify(cli);
       }
-      if(data._command == "move"){
+      if(temp._command == "move"){
         console.log("move command");
         response = JSON.stringify(this._gameState);
       }
