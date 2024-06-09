@@ -17,7 +17,8 @@ fastify.post('/', function (request, reply) {
   console.log(" ")
   console.log(" ")
   console.log(" ")
-  var responsedata = game.resolveRequest(request.body)
+  var rqbody = JSON.stringify(request.body)
+  var responsedata = game.resolveRequest(rqbody)
   reply.type('text/html').send(responsedata)
 })
 
