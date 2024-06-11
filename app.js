@@ -83,8 +83,8 @@ class Pawn {
     //Pawn's Image
     this._image = "Image Url Here";
     //Pawns location
-    this._x;
-    this._y;
+    this._x = 0
+    this._y = 0
 
     //Set Data Type for client
     this._type = "pawn";
@@ -95,7 +95,7 @@ class GameState {
   constructor(){
     this._mapID = 0;
     this._mapName = "Map Name";
-    this._mapImahe = "Image Url Here";
+    this._mapImage = "Image Url Here";
     this._pawns = [ , ];
     this._type = "gamestate";
   }

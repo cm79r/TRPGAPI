@@ -34,9 +34,8 @@ class Client {
 
 
             // Converting JSON data to string
- 
             // Sending data with the request
-            xhr.send(data);
+            xhr.send(JSON.stringify(data));
         }
 
         this.connect = function(){
